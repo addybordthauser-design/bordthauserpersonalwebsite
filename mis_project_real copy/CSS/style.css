@@ -1,0 +1,307 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600&display=swap');
+
+/* Body Styling */
+body {
+    font-family: 'Outfit', sans-serif; /* Simple sans-serif, matching desired theme */
+    background-color: #f5f5f5; /* Light cream background */
+    color: #333; /* Dark grey text for contrast */
+    line-height: 1.7; /* Adjusted line height for readability */
+    padding: 0; /* Remove default padding */
+    font-weight: 300;
+    scroll-behavior: smooth;
+}
+
+header {
+    background-color: #ffffff; /* White background for header */
+    color: #333; /* Dark text */
+    padding: 1.5rem 0;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #eee; /* Thin line */
+}
+
+header h1 {
+    margin: 0;
+    font-family: 'Cormorant Garamond', serif; /* Elegant serif for main title */
+    font-size: 3em;
+    font-weight: 700;
+    color: #d4a5a5; /* Soft pink for main title */
+    letter-spacing: 0.05em;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #f8e1e1; /* Muted pink */
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #ddd; /* Thin line for subtle separation */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 0.8rem; /* Adjusted padding for nav links */
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+    color: #b5838d; /* Slightly darker pink on hover */
+}
+
+/* Main Content wrapper */
+.container {
+    max-width: 1000px; /* Adjusted max-width */
+    margin: 4rem auto; /* Consistent top/bottom margin */
+    padding: 0 2rem;
+}
+
+/* General Section Styling */
+section {
+    margin-bottom: 4rem; /* Consistent spacing between sections */
+    padding: 3rem; /* Generous padding inside sections */
+    background-color: #ffffff; /* White background for sections */
+    border-radius: 15px; /* Modern rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05); /* Soft, subtle shadow */
+    border: 1px solid #eee; /* Thin, light border */
+}
+
+h2 {
+    font-family: 'Cormorant Garamond', serif; /* Elegant serif for headings */
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #d4a5a5; /* Soft pink for headings */
+    border-bottom: 1px solid #f8e1e1; /* Thin pink underline */
+    padding-bottom: 1rem;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    letter-spacing: 0.04em;
+}
+
+h3 {
+    font-family: 'Outfit', sans-serif; /* Simple sans-serif for subheadings */
+    font-size: 1.6em;
+    font-weight: 500;
+    color: #555; /* Muted dark grey */
+    margin-top: 2.5rem;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.02em;
+}
+
+p {
+    margin-bottom: 1.2rem;
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid #eee;
+}
+
+.intro-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.intro-content img.headshot {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 3px solid #f8e1e1; /* Muted pink border */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.hobby-item,
+.company-interest {
+    background-color: #fcfcfc; /* Off-white for distinct blocks */
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eee;
+}
+
+.hobby-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.hobby-gallery img {
+    margin: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.hobby-gallery img:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.download-resume a {
+    display: inline-block;
+    background-color: #d4a5a5; /* Soft pink button */
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.download-resume a:hover {
+    background-color: #b5838d; /* Darker pink on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+footer {
+    text-align: center;
+    padding: 2.5rem 0;
+    background-color: #ffffff;
+    color: #666;
+    margin-top: 4rem;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid #eee;
+}
+
+/* Game Page Specific */
+#game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5; /* Light cream background for game section */
+    padding: 3rem;
+}
+
+#flappyBirdGame {
+    border: 1px solid #ddd; /* Thin border for the game canvas */
+    background-color: #87CEEB; /* Light blue sky background for canvas */
+    margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .intro-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .intro-content img.headshot {
+        margin-bottom: 1rem;
+    }
+
+    .container {
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+    }
+
+    section {
+        padding: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    h2 {
+        font-size: 2.2em;
+    }
+
+    h3 {
+        font-size: 1.4em;
+    }
+
+    .hobby-gallery {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    nav ul li a {
+        padding: 0.8rem 1rem;
+        margin: 0;
+    }
+
+    nav ul li a::after {
+        bottom: 0.4rem;
+    }
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2.5em;
+    }
+
+    .container {
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+    }
+
+    section {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        margin-bottom: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.2em;
+        margin-top: 1.5rem;
+    }
+
+    .intro-content img.headshot {
+        width: 180px;
+        height: 180px;
+    }
+
+    .download-resume a {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9em;
+    }
+
+    nav ul li a {
+        padding: 0.6rem 0.8rem;
+    }
+
+    footer {
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+    }
+}

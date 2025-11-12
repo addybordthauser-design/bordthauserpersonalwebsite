@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Addisyn Bordthauser</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hobbies.html">Hobbies</a></li>
+                <li><a href="discover.html">Discover UMD & Duluth</a></li>
+                <li><a href="resume.html">Resume & Career</a></li>
+                <li><a href="game.html">Game</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="game-content">
+            <h2>Flappy Bird Game</h2>
+            <canvas id="flappyBirdGame" width="288" height="512"></canvas>
+            <script>
+                const canvas = document.getElementById('flappyBirdGame');
+                const ctx = canvas.getContext('2d');
+
+                // Game variables
+                let birdX = 50;
+                let birdY = 200;
+                let birdDropSpeed = 0;
+                const gravity = 0.2;
+                const jumpStrength = -4;
+                const birdImage = new Image();
+                birdImage.src = 'media/Minnesota-Duluth-Bulldogs-logo.png'; // Path to your bulldog image
+                const birdWidth = 50; // Consistent bird width
+                const birdHeight = 50; // Consistent bird height
+
+                let pipes = [];
+                const pipeWidth = 40;
+                const pipeGap = 150;
+                const pipeSpeed = 1;
+
+                let score = 0;
+                let gameRunning = false; // Start game paused
+                const backgroundMusic = new Audio('media/song.mp3');
+                backgroundMusic.loop = true;
+                backgroundMusic.volume = 0.5;
+
+                // Background colors and cloud properties
+                const skyColor = '#7A0019'; // Maroon
+                const cloudColor = '#FFCC33'; // Gold
+                const clouds = [];
+                const numClouds = 5;
+                for (let i = 0; i < numClouds; i++) {
+                    clouds.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height / 3,
+                        width: 50 + Math.random() * 50,
+                        height: 20 + Math.random() * 20,
+                        speed: 0.1 + Math.random() * 0.1
+                    });
+                }
+
+                // Pipe drawing
+                function drawPipes() {
+                    for (let i = 0; i < pipes.length; i++) {
+                        let pipe = pipes[i];
+                        ctx.fillStyle = '#7A0019'; // Maroon for pipes
+                        ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
+                        ctx.fillRect(pipe.x, pipe.bottom, pipeWidth, canvas.height - pipe.bottom);
+                        ctx.strokeStyle = '#FFCC33'; // Gold border for pipes
+                        ctx.lineWidth = 2;
+                        ctx.strokeRect(pipe.x, 0, pipeWidth, pipe.top);
+                        ctx.strokeRect(pipe.x, pipe.bottom, pipeWidth, canvas.height - pipe.bottom);
+                    }
+                }
+
+                // Collision detection
+                function checkCollision() {
+                    for (let i = 0; i < pipes.length; i++) {
+                        let p = pipes[i];
+                        // Check if bird's x-position overlaps with pipe
+                        if (birdX < p.x + pipeWidth && birdX + birdWidth > p.x) {
+                            // Check if bird's y-position overlaps with top pipe or bottom pipe
+                            if (birdY < p.top || birdY + birdHeight > p.bottom) {
+                                gameRunning = false;
+                                backgroundMusic.pause();
+                            }
+                        }
+                    }
+                    // Collision with ground or ceiling
+                    if (birdY + birdHeight > canvas.height || birdY < 0) {
+                        gameRunning = false;
+                        backgroundMusic.pause();
+                    }
+                }
+
+                // Bird drawing
+                function drawBird() {
+                    ctx.drawImage(birdImage, birdX, birdY, birdWidth, birdHeight); // Draw bulldog image
+                }
+
+                // Draw clouds
+                function drawClouds() {
+                    for (let i = 0; i < clouds.length; i++) {
+                        let cloud = clouds[i];
+                        ctx.fillStyle = cloudColor;
+                        ctx.beginPath();
+                        ctx.arc(cloud.x, cloud.y, cloud.width / 3, 0, Math.PI * 2);
+                        ctx.arc(cloud.x + cloud.width * 0.4, cloud.y - cloud.height * 0.2, cloud.width / 3.5, 0, Math.PI * 2);
+                        ctx.arc(cloud.x + cloud.width * 0.7, cloud.y, cloud.width / 3, 0, Math.PI * 2);
+                        ctx.fill();
+                        cloud.x -= cloud.speed;
+                        if (cloud.x + cloud.width < 0) {
+                            cloud.x = canvas.width;
+                            cloud.y = Math.random() * canvas.height / 3;
+                        }
+                    }
+                }
+
+                // Game loop
+                function gameLoop() {
+                    if (!gameRunning) {
+                        backgroundMusic.pause();
+                        return;
+                    }
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+                    ctx.fillStyle = skyColor; // Set sky background
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    drawClouds(); // Draw and animate clouds
+
+                    // Bird movement
+                    birdDropSpeed += gravity;
+                    birdY += birdDropSpeed;
+
+                    drawBird();
+                    drawPipes();
+                    checkCollision(); // Check collision after drawing everything
+
+                    // Pipe generation and movement
+                    if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 200) {
+                        let topPipeHeight = Math.floor(Math.random() * (canvas.height - pipeGap - 50)) + 20;
+                        pipes.push({
+                            x: canvas.width,
+                            top: topPipeHeight,
+                            bottom: topPipeHeight + pipeGap
+                        });
+                    }
+
+                    for (let i = 0; i < pipes.length; i++) {
+                        pipes[i].x -= pipeSpeed;
+
+                        if (pipes[i].x + pipeWidth < 0) {
+                            pipes.shift(); // Remove off-screen pipes
+                            score++;
+                        }
+                    }
+
+                    requestAnimationFrame(gameLoop);
+                }
+
+                birdImage.onload = () => {
+                    gameLoop(); // Start game loop only after image loads
+                };
+                birdImage.onerror = () => {
+                    console.error("Failed to load bird image.");
+                    // Fallback to drawing a square if image fails to load
+                    drawBird = () => {
+                        ctx.fillStyle = 'grey';
+                        ctx.fillRect(birdX, birdY, birdWidth, birdHeight);
+                    };
+                    gameLoop();
+                };
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.code === 'Space') {
+                        if (!gameRunning) {
+                            // Start/Restart game
+                            birdY = 200;
+                            birdDropSpeed = 0;
+                            pipes = [];
+                            score = 0;
+                            gameRunning = true;
+                            backgroundMusic.currentTime = 0;
+                            backgroundMusic.play().catch(e => console.log("Autoplay prevented. User interaction needed.", e));
+                            gameLoop();
+                        } else {
+                            birdDropSpeed = jumpStrength;
+                        }
+                    }
+                });
+
+                // Add score display
+                function drawScore() {
+                    ctx.fillStyle = "black";
+                    ctx.font = "20px Outfit";
+                    ctx.fillText("Score: " + score, 10, canvas.height - 20);
+                }
+
+                // Modify gameLoop to draw score
+                const originalGameLoop = gameLoop;
+                gameLoop = () => {
+                    originalGameLoop();
+                    drawScore();
+                };
+
+                // Initial message for the user
+                ctx.fillStyle = "black";
+                ctx.font = "20px Outfit";
+                ctx.fillText("Press Space to Start", canvas.width / 2 - 80, canvas.height / 2);
+
+            </script>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Addisyn Bordthauser. All rights reserved.</p>
+    </footer>
+</body>
+</html>
